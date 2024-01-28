@@ -94,6 +94,9 @@ git push
 чтобы закачать изменения с сайта - 
 git pull
 
+28.01.2024
+инфа по парсингу https://www.youtube.com/watch?v=7hn1_t2ZtJQ
+
 еще инфа - 
 https://htmlacademy.ru/blog/git/useful-commands-for-working-with-git
 гораздо понятнее...
