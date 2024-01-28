@@ -20,7 +20,10 @@ def parser(url:str):
          n1 = n1.strip()
          p1 = products_prices[i].text
          p1 = p1.strip()
-         print(f'№{i+1}. {n1} {p1}')
+         p1 = p1.replace(' р.', '')
+         p1 = p1.replace(' ', '')
+         p1 = int(p1)
+         print(f'№{i+1}. {n1} {p1} р.')
          
     #for price in products_prices:
         #price = price.text
