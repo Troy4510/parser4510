@@ -2,11 +2,18 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 import time
+import os.path
 import sql_module as sm
 
 main_folder = './parser4510/'
 
-def parser(url):
+#временная логика
+pages_count = 22
+makelinks = False
+make_sql_base = True
+multiparce_flag = True
+
+def parser_1page(url):
     res = requests.get(url=url)
     soup = BeautifulSoup(res.text, 'lxml')
     products = soup.find_all('div', class_='p__bottom')
@@ -29,25 +36,33 @@ def parser(url):
 
 def make_url_list(url):#начинаем с начального адреса и проверяем доступность страниц
     url_list = open(f'{main_folder}url_list.txt', '+w')
-    url_list.write(url+'\n')
+    #url_list.write(url+'\n')
     #?PAGEN_1=2,?PAGEN_1=3... 
     
-    for i in range(2,25):    
+    for i in range(1,pages_count+1):    
         urlx = url + '?PAGEN_1=' + str(i)
         if requests.get(urlx).status_code == 200:
             print(urlx)
             url_list.write(urlx+'\n')
 
     url_list.close
+
+
+def multiparce():
+    print('[multiparce]')
+    work_url_list = main_folder + 'url_list.txt'
+    workfile = open(work_url_list, '+r')
     
-    #with open('./parser4510/url_list.txt') as url_list:
-    #    l1 = url_list.readline()
-    #    print(l1)
+    for i in range(pages_count):
+        link1 = workfile.readline()
+        print('/n[parse] ' + link1)
+        parser_1page(link1)
+        
+    workfile.close()
 
 
 if __name__ == "__main__":
     print('[RUN MAIN]')
-    sm.check_base(db_folder=main_folder)
-    #sm.add_product(main_folder, 'BOOTS', 'llliinnnkkk', 2000)
-    #make_url_list(url="https://tamaris.ru/catalog/obuv/")
-    parser(url="https://tamaris.ru/catalog/obuv/")
+    if make_sql_base == True: sm.check_base(db_folder=main_folder)
+    if makelinks == True: make_url_list(url="https://tamaris.ru/catalog/obuv/")
+    if os.path.exists(main_folder + 'url_list.txt') and multiparce_flag == True: multiparce()
