@@ -30,8 +30,9 @@ def parser_1page(url):
         price1 = price1.replace(' ', '')#удаляем ненужные пробелы
         price1 = int(price1)#конвертируем цену из текста в число, тип переменной теперь int
         print(f'[add to sql_base] {name1} {price1}')
-        sm.add_product(main_folder, name1, link1, price1)
- 
+        #проверка наличия в базе и внесение записи/изменение статуса
+        sm.check_record(main_folder, name1, link1, price1)
+            
     
 
 def make_url_list(url):#начинаем с начального адреса и проверяем доступность страниц
@@ -63,6 +64,11 @@ def multiparce():
 
 if __name__ == "__main__":
     print('[RUN MAIN]')
-    if make_sql_base == True: sm.check_base(db_folder=main_folder)
-    if makelinks == True: make_url_list(url="https://tamaris.ru/catalog/obuv/")
-    if os.path.exists(main_folder + 'url_list.txt') and multiparce_flag == True: multiparce()
+    #if make_sql_base == True: sm.check_base(db_folder=main_folder)
+    #if makelinks == True: make_url_list(url="https://tamaris.ru/catalog/obuv/")
+    #if os.path.exists(main_folder + 'url_list.txt') and multiparce_flag == True: multiparce()
+    #sm.erase_sverka(main_folder)
+    #print(sm.counter(main_folder))
+    #print(sm.read_record(main_folder, 1))
+    #ans = sm.check_record(main_folder, 'Туфли лодочки кожаные', 'https://tamaris.ru/catalog/obuv/tufli_1/tufli_zakrytye/tufli-lodochki-kozhanye-1-22434-41-418/', 9995)
+    #print(ans)
