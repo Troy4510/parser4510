@@ -75,13 +75,28 @@ def counter(db_folder):
 
 #извлекает запись из базы по PRIMARY_KEY
 def read_record(db_folder, key):
+    record = ()
     connection = sqlite3.connect(db_folder + 'sql_base.db')
     cursor = connection.cursor()
     query = 'SELECT * FROM tProduct WHERE id = ?'
     cursor.execute(query, key)
     record = cursor.fetchone()
     connection.close()
+    #print(record)
     return record
+
+
+#извлекает несколько записей из базы по PRIMARY_KEY
+def read_records(db_folder, key, end):
+    records = ()
+    connection = connection = sqlite3.connect(db_folder + 'sql_base.db')
+    cursor = connection.cursor()
+    query = 'SELECT * FROM tProduct WHERE id >= ? AND id <= ?'
+    cursor.execute(query, (str(key), str(end)))
+    records = cursor.fetchall()
+    connection.close()
+    #print(records)
+    return records
 
 
 #проверяет есть ли запись в базе и обновляет/добавляет её
@@ -116,4 +131,13 @@ def erase_sverka(db_folder):
 #удаляет записи со статусом 'need_check'
 def erase_unchecked(db_folder):
     #deleted_products
-    pass
+    connection = sqlite3.connect(db_folder + 'sql_base.db')
+    cursor = connection.cursor()
+    query = 'DELETE FROM tProduct WHERE sverka = ?'
+    cursor.execute(query, 'need_check')
+    connection.commit()
+    connection.close()
+    
+
+#ans = read_records('./parser4510/', 1, 5)
+#print(ans)

@@ -33,7 +33,6 @@ def parser_1page(url):
         #проверка наличия в базе и внесение записи/изменение статуса
         sm.check_record(main_folder, name1, link1, price1)
             
-    
 
 def make_url_list(url):#начинаем с начального адреса и проверяем доступность страниц
     url_list = open(f'{main_folder}url_list.txt', '+w')
@@ -62,6 +61,8 @@ def multiparce():
     workfile.close()
 
 
+
+
 if __name__ == "__main__":
     print('[RUN MAIN]')
     #if make_sql_base == True: sm.check_base(db_folder=main_folder)
@@ -72,3 +73,4 @@ if __name__ == "__main__":
     #print(sm.read_record(main_folder, 1))
     #ans = sm.check_record(main_folder, 'Туфли лодочки кожаные', 'https://tamaris.ru/catalog/obuv/tufli_1/tufli_zakrytye/tufli-lodochki-kozhanye-1-22434-41-418/', 9995)
     #print(ans)
+    

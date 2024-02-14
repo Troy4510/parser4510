@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>PARSER_4510</title>
+</head>
+
+<body>
+	<style>
+		body {
+		  background-color: #808080;
+		}
+		</style>
+200 ТОВАРОВ САЙТА TAMARIS.RU
+	<table border = 1>
+		<thead>
+			<tr>
+				<th> N </th>
+				<th> НАИМЕНОВАНИЕ </th>
+                <th> ССЫЛКА </th>
+                <th> ЦЕНА </th>
+			</tr>
+		</thead>
+		<tbody>
+
+			{%for cell in value%}
+			<tr>
+				<td> {{cell[0]}} </td>
+				<td> {{cell[1]}} </td>
+                <td> <a href={{cell[2]}}> {{cell[2]}} </a> </td>
+                <td> {{cell[3]}} </td>
+			</tr>
+			{% endfor %}
+			
+		</tbody>
+	</table>
+</body>
