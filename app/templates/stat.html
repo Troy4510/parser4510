@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>PARSER_4510</title>
+</head>
+
+<body>
+	<style>
+		body {
+		  background-color: #808080;
+		}
+		</style>
+СТАТИСТИЧЕСКИЕ ДАННЫЕ
+	<table border = 1>
+		<thead>
+			<tr>
+				<th> ПОСЛЕДНИЙ UPDATE </th>
+				<th> ВСЕГО ТОВАРОВ В БАЗЕ </th>
+                <th> ДОБАВЛЕНО </th>
+                <th> УДАЛЕНО </th>
+			</tr>
+		</thead>
+		<tbody>
+
+			{%for cell in value%}
+			<tr>
+				<td> {{cell[1]}} </td>
+				<td> {{cell[2]}} </td>
+                <td> {{cell[3]}} </td>
+				<td> {{cell[4]}} </td>
+			</tr>
+			{% endfor %}
+			
+		</tbody>
+	</table>
+</body>

@@ -2,7 +2,6 @@ import sqlite3
 
 added_products = 0
 deleted_products = 0
-updated_products = 0
 
 
 #проверяет, создана ли база и при отсутствии создаёт базу+таблицы в ней
@@ -23,19 +22,24 @@ def check_base(db_folder:str):
     
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS tStat (
+    id INTEGER PRIMARY KEY,
     date_upd TEXT,
     vsego INTEGER,
     insert_product INTEGER,
-    delete_product INTEGER
-    ) 
+    delete_product INTEGER)
     ''')
     
+    cursor.execute('INSERT INTO tStat(vsego) VALUES (0)')
+    cursor.execute('DELETE FROM tStat WHERE id > 1')
+                     
     connection.commit()
     connection.close()
     
 
 #добавляет очередную запись и ставит статус 'ok'   
 def add_product(db_folder:str, name:str, link:str, price:int):
+    global added_products
+    added_products += 1 #учитывает количество прибавок в базе для статистики
     connection = sqlite3.connect(db_folder + 'sql_base.db')
     cursor = connection.cursor()
     query = 'INSERT INTO tProduct (name, link, price, sverka) VALUES (?, ?, ?, ?)'
@@ -101,22 +105,18 @@ def read_records(db_folder, key, end):
 
 #проверяет есть ли запись в базе и обновляет/добавляет её
 def check_record(db_folder, name, link, price):
-    #added_products, updated_products
     connection = sqlite3.connect(db_folder + 'sql_base.db')
     cursor = connection.cursor()
     query = 'SELECT * FROM tProduct WHERE name = ? AND link = ?'
     cursor.execute(query, (name, link))
     record = cursor.fetchone()
     connection.close()
+    
     if record == None: 
         add_product(db_folder, name, link, price)
-        #return 'added'
-        #added_products += 1
     else:
         key = record[0]
         update_record(db_folder, key, price)
-        #return 'updated'
-        #updated_products += 1
     
         
 #меняет флаг всех записей в базе на 'need_check'    
@@ -128,16 +128,49 @@ def erase_sverka(db_folder):
     connection.close()
     
     
-#удаляет записи со статусом 'need_check'
+#удаляет записи со статусом 'need_check', возвращает количество удалённых
 def erase_unchecked(db_folder):
-    #deleted_products
+    global deleted_products
+    deleted_products +=1 #для статистики удалено продуктов
     connection = sqlite3.connect(db_folder + 'sql_base.db')
     cursor = connection.cursor()
     query = 'DELETE FROM tProduct WHERE sverka = ?'
-    cursor.execute(query, 'need_check')
+    cursor.execute(query, ('need_check',))
     connection.commit()
     connection.close()
     
 
-#ans = read_records('./parser4510/', 1, 5)
-#print(ans)
+#выдача статистики из tStat
+def read_stat(db_folder):
+    connection = sqlite3.connect(db_folder+'sql_base.db')
+    cursor = connection.cursor()
+    query = 'SELECT * FROM tStat WHERE id = 1'
+    cursor.execute(query)
+    stat = cursor.fetchall()
+    connection.close()
+    return stat
+
+
+#запись статистики в tStat
+def write_stat(db_folder, date, total, inserted, deleted):
+    connection = sqlite3.connect(db_folder+'sql_base.db')
+    cursor = connection.cursor()
+    query = ''' UPDATE tStat 
+                SET date_upd = ?,
+                    vsego = ?,
+                    insert_product = ?,
+                    delete_product = ?
+                WHERE id = 1'''
+    cursor.execute(query, (date, total, inserted, deleted,))
+    connection.commit()
+    connection.close()
+    
+
+if __name__ == "__main__": #при импорте модуля не выполняется
+    #ans = read_records('./parser4510/', 1, 5)
+    #print(ans)
+    #write_stat('./parser4510/', '15_10_25', 1,2,3)
+    #check_base('./parser4510/')
+    #added_products += 1
+    #print(read_stat('./parser4510/'))
+    pass
