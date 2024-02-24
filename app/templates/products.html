@@ -12,27 +12,27 @@
 		  background-color: #808080;
 		}
 		</style>
-200 ТОВАРОВ САЙТА TAMARIS.RU
-	<table border = 1>
+	<div id="block-left">200 ТОВАРОВ САЙТА TAMARIS.RU</div>
+	<div id="block-right">
+	<table border=1 style="width:100%">
 		<thead>
 			<tr>
 				<th> N </th>
-				<th> НАИМЕНОВАНИЕ </th>
-                <th> ССЫЛКА </th>
+                <th> ТОВАР </th>
                 <th> ЦЕНА </th>
 			</tr>
 		</thead>
 		<tbody>
 
-			{%for cell in value%}
+			{%for cell in products%}
 			<tr>
 				<td> {{cell[0]}} </td>
-				<td> {{cell[1]}} </td>
-                <td> <a href={{cell[2]}}> {{cell[2]}} </a> </td>
+                <td> <a href={{cell[2]}}> {{cell[1]}} </a> </td>
                 <td> {{cell[3]}} </td>
 			</tr>
 			{% endfor %}
 			
 		</tbody>
 	</table>
+	</div>
 </body>

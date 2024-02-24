@@ -17,68 +17,46 @@
 		.header_text{
 			width:50%;
 			height:auto;
+			background-color: green;
 		}
 		.stat_table{
 			width:50%;
 			height:auto;
+			background-color: #808080;
 		}
 		.product_table{
-			width:100%;
+			width:50%;
+			background-color: red;
 		}
 	</style>
 
 	<div class="container">
 
 		<div class="header_text">
-			<h2>Список всех товаров сайта TAMARIS.RU</h2>
+			<h2>Список всех товаров сайта TAMARIS.RU<h2>
 			<!-- img src = "static/shoes.jpg" class = image -->
 		</div>
 
 		<div class="stat_table">
-			<caption>Статистические данные</caption>
-			<table border = 1 style="background-color: #808080;">
+			<table border = 1>
 				<tr>
 					<th>Дата обновления данных</th>
-					<td>{{stat[0][1]}}</td>
+					<td>{{value[0][1]}}</td>
 				</tr>
 				<tr>
 					<th>Количество товаров</th>
-					<td>{{stat[0][2]}}</td>
+					<td>{{value[0][2]}}</td>
 				</tr>
 				<tr>
 					<th>Добавлено товаров</th>
-					<td>{{stat[0][3]}}</td>
+					<td>{{value[0][3]}}</td>
 				</tr>
 				<tr>
 					<th>Удалено товаров</th>
-					<td>{{stat[0][4]}}</td>
+					<td>{{value[0][4]}}</td>
 				</tr>
 			</table>	
 		</div>
-
-		<div class="product_table">
-			<caption>Первые 50 товаров</caption>
-			<table border=1 style="width:100%;">
-			<thead>
-				<tr>
-					<th> N </th>
-					<th> ТОВАР </th>
-					<th> ЦЕНА </th>
-				</tr>
-			</thead>
-			<tbody>
-	
-				{%for cell in products%}
-				<tr>
-					<td> {{cell[0]}} </td>
-					<td> <a href={{cell[2]}}> {{cell[1]}} </a> </td>
-					<td> {{cell[3]}} </td>
-				</tr>
-				{% endfor %}
-				
-			</tbody>
-		</table>
-		<div>
 
 	</div> <!--end container-->
 
