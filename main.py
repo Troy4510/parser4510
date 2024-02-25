@@ -106,7 +106,7 @@ if __name__ == "__main__":
             sm.erase_sverka(main_folder)        #все записи базы меняют статус на 'need_check'
             multiparce()                        #запускается парсер, счётчики и статусы проверенных на 'ok'
             sm.erase_unchecked(main_folder)     #удаляются товары которых нет на сайте (статус 'need_check' не сменился на 'ok')
-            date_upd = datetime.datetime.now()  #дата для внесения в таблицу статистики
+            date_upd = datetime.datetime.now().strftime('%d.%m.%y/%H:%M')  #дата для внесения в таблицу статистики
             vsego = sm.counter(main_folder)     #количество записей для таблицы статистики
             insert_product = sm.added_products  #количество добавленных
             delete_product = sm.deleted_products    #количество удалённых
@@ -119,7 +119,8 @@ if __name__ == "__main__":
     #не забыть! дистанционный запуск на сервере всегда делать через nohup чтоб работало в фоне и оставались логи консоли
     
     
-    #всякие пробы))) прим.: час - 3600 сек, сутки - 86400 сек
+    #всякие пробы))) 
+    #прим.: час - 3600 сек, сутки - 86400 сек
     #print(os.path.exists(main_folder + 'sql_base.db'))    
     #sm.erase_sverka(main_folder)
     #print(sm.counter(main_folder))
